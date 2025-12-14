@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Anima & Nous | Méthodologie & Culture</title>
+    <style>
+        /* --- DESIGN SYSTEM APPLE STYLE --- */
+        :root {
+            --bg-color: #F5F5F7;
+            --card-bg: #FFFFFF;
+            --text-primary: #1D1D1F;
+            --text-secondary: #86868B;
+            --accent-blue: #0071E3;
+            --accent-green: #34C759;
+            --accent-orange: #FF9500;
+            --accent-purple: #AF52DE;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --radius: 20px;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: var(--font-main); 
+            background-color: var(--bg-color); 
+            color: var(--text-primary); 
+            line-height: 1.6; 
+            -webkit-font-smoothing: antialiased; 
+            padding-top: 60px; /* Espace pour la navbar fixe */
+        }
+
+        /* --- NAVIGATION RESPONSIVE --- */
+        nav { 
+            position: fixed; 
+            top: 0; 
+            width: 100%; 
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000; 
+            border-bottom: 1px solid rgba(0,0,0,0.1); 
+        }
+
+        .nav-container { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 1rem 2rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+
+        .logo { 
+            font-weight: 700; 
+            font-size: 1.2rem; 
+            color: var(--text-primary); 
+            text-decoration: none; 
+            flex-shrink: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--text-secondary); 
+            font-size: 0.9rem; 
+            transition: color 0.3s; 
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover { color: var(--accent-blue); }
+
+        /* --- HERO SECTION --- */
+        header { 
+            text-align: center; 
+            padding: 4rem 1.5rem 2rem; 
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+
+        h1 { 
+            font-size: clamp(2.5rem, 5vw, 4rem); /* Responsive Font Size */
+            font-weight: 700; 
+            letter-spacing: -0.02em; 
+            margin-bottom: 1rem; 
+            line-height: 1.1;
+        }
+
+        .subtitle { 
+            font-size: clamp(1.1rem, 3vw, 1.5rem); 
+            color: var(--text-secondary); 
+            font-weight: 400; 
+        }
+
+        /* --- LAYOUT UTILS --- */
+        section { 
+            padding: 3rem 1.5rem; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+        }
+
+        h2 { 
+            font-size: clamp(1.8rem, 4vw, 2.2rem); 
+            margin-bottom: 1.5rem; 
+            font-weight: 600; 
+        }
+
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 1.5rem; 
+        }
+        
+        .full-width { grid-column: 1 / -1; }
+
+        /* --- CARDS --- */
+        .card { 
+            background: var(--card-bg); 
+            border-radius: var(--radius); 
+            padding: 1.5rem; 
+            box-shadow: var(--shadow-sm); 
+            border: 1px solid rgba(0,0,0,0.02); 
+            height: 100%;
+        }
+
+        .card h3 { 
+            font-size: 1.3rem; 
+            margin-bottom: 1rem; 
+            color: var(--text-primary); 
+            border-bottom: 2px solid #f0f0f0; 
+            padding-bottom: 0.5rem; 
+        }
+
+        .card h4 { 
+            font-size: 1rem; 
+            margin-top: 1.5rem; 
+            margin-bottom: 0.5rem; 
+            color: var(--accent-blue); 
+            font-weight: 700; 
+        }
+        
+        .card-tag { 
+            display: inline-block; 
+            background: #E8F2FF; 
+            color: var(--accent-blue); 
+            padding: 4px 12px; 
+            border-radius: 20px; 
+            font-size: 0.75rem; 
+            font-weight: 600; 
+            margin-bottom: 1rem; 
+            text-transform: uppercase; 
+        }
+
+        /* --- METHODOLOGIE & LISTS --- */
+        .step-list { list-style: none; counter-reset: steps; padding-left: 0; }
+        .step-list li { position: relative; padding-left: 2.5rem; margin-bottom: 1rem; }
+        .step-list li::before { 
+            counter-increment: steps; 
+            content: counter(steps); 
+            position: absolute; 
+            left: 0; top: 0; 
+            width: 1.8rem; height: 1.8rem; 
+            background: #F2F2F7; 
+            color: var(--accent-blue); 
+            border-radius: 50%; 
+            text-align: center; 
+            line-height: 1.8rem; 
+            font-weight: bold; 
+            font-size: 0.9rem; 
+        }
+        
+        .warning-box, .tip-box, .structure-box {
+            padding: 1rem; border-radius: 8px; font-size: 0.9rem; margin-top: 1rem; 
+        }
+        .warning-box { background: #FFF5F5; border-left: 4px solid #FF3B30; color: #1D1D1F; }
+        .tip-box { background: #F2FCF5; border-left: 4px solid #34C759; color: #1D1D1F; }
+        .structure-box { background: #F9F9F9; border: 1px dashed #ccc; font-family: monospace; overflow-x: auto; }
+
+        /* --- REFERENCES (ACCORDION) --- */
+        details { 
+            background: var(--card-bg); 
+            margin-bottom: 1rem; 
+            border-radius: 12px; 
+            box-shadow: var(--shadow-sm); 
+            overflow: hidden; 
+        }
+        
+        details summary { 
+            padding: 1.2rem; 
+            cursor: pointer; 
+            font-weight: 600; 
+            list-style: none; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            /* Enlever la flèche par défaut sur Safari */
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        
+        details summary::-webkit-details-marker { display: none; }
+
+        details summary::after { 
+            content: '+'; 
+            font-size: 1.5rem; 
+            color: var(--text-secondary); 
+            transition: transform 0.2s; 
+        }
+        
+        details[open] summary::after { transform: rotate(45deg); }
+        
+        .details-content { 
+            padding: 0 1.2rem 1.2rem; 
+            color: var(--text-secondary); 
+            border-top: 1px solid #f0f0f0; 
+        }
+        
+        .ref-item { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed #eee; }
+        .ref-item:last-child { border-bottom: none; }
+        .ref-item strong { color: var(--text-primary); display: block; margin-bottom: 0.2rem; font-size: 1.05rem; }
+        
+        .badge-container { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px; }
+        .ref-link, .ref-connect { 
+            display: inline-block; 
+            font-size: 0.75rem; 
+            padding: 4px 10px; 
+            border-radius: 6px; 
+            font-weight: 600; 
+        }
+        .ref-link { background: #FFF4E5; color: var(--accent-orange); }
+        .ref-connect { background: #F3E5FF; color: var(--accent-purple); }
+
+        /* --- TABLE --- */
+        .table-container { 
+            overflow-x: auto; /* IMPORTANT POUR MOBILE */
+            -webkit-overflow-scrolling: touch;
+            background: var(--card-bg); 
+            border-radius: var(--radius); 
+            box-shadow: var(--shadow-sm); 
+        }
+        
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th, td { text-align: left; padding: 1rem; border-bottom: 1px solid #eee; font-size: 0.95rem; }
+        th { background: #fafafa; font-weight: 600; color: var(--text-secondary); }
+
+        /* --- QUIZ --- */
+        .quiz-option { 
+            display: block; 
+            margin: 10px 0; 
+            padding: 15px; 
+            background: #f9f9f9; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            border: 2px solid transparent; 
+            transition: all 0.2s; 
+            /* Meilleure cible tactile */
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+        }
+        .quiz-option:hover, .quiz-option:active { background: #f0f0f0; }
+        .quiz-option.correct { border-color: var(--accent-green); background: #eaffea; color: #006400; }
+        .quiz-option.wrong { border-color: #ff3b30; background: #fff0f0; color: #8b0000; }
+        
+        #question-counter { color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- FOOTER --- */
+        footer { text-align: center; padding: 3rem 1.5rem; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid rgba(0,0,0,0.1); margin-top: 4rem; }
+
+        /* --- MEDIA QUERIES (MOBILE SPECIFIC) --- */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+            }
+
+            .nav-links {
+                width: 100%;
+                overflow-x: auto; /* Scroll horizontal sur mobile */
+                padding-bottom: 5px;
+                margin-top: 10px;
+                gap: 10px;
+                -webkit-overflow-scrolling: touch; /* Scroll fluide iOS */
+                /* Cacher la scrollbar mais garder le scroll */
+                scrollbar-width: none; 
+                -ms-overflow-style: none;
+            }
+            .nav-links::-webkit-scrollbar { display: none; }
+
+            .nav-links a {
+                background: rgba(0,0,0,0.05);
+                padding: 0.5rem 1rem;
+                border-radius: 15px;
+                font-size: 0.85rem;
+                flex-shrink: 0; /* Empêche l'écrasement */
+            }
+
+            .grid {
+                grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+            }
+
+            .card {
+                padding: 1.2rem;
+            }
+
+            h1 { font-size: 2.2rem; }
+            section { padding: 2rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Anima & Nous</a>
+            <div class="nav-links">
+                <a href="#metho">Méthodologie</a>
+                <a href="#penseurs">Penseurs</a>
+                <a href="#refs">Références</a>
+                <a href="#bilan">Bilan</a>
+                <a href="#quiz">Quiz</a>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Imaginer, Connaître, Comprendre.</h1>
+        <p class="subtitle">Votre compagnon de révision interactif pour le BTS.</p>
+    </header>
+
+    <section id="metho">
+        <h2>1. Méthodologie : Maîtriser l'Épreuve</h2>
+        <div class="grid">
+            
+            <div class="card">
+                <span class="card-tag">Exercice 1 : Synthèse (40 pts)</span>
+                <h3>La Synthèse de Documents</h3>
+                <p><strong>Principe :</strong> Exercice purement <u>objectif</u>. Confronter les documents sans donner votre avis [cite: 204-205].</p>
+                <div class="warning-box">
+                    <strong>🚫 INTERDIT :</strong> Aucune idée perso. Pas de "Je".
+                </div>
+
+                <h4>Les Plans Types</h4>
+                <ul>
+                    <li><strong>Thématique :</strong> Aspects / Causes / Conséquences.</li>
+                    <li><strong>Confrontation :</strong> Opposer les visions (ex: Descartes vs Voltaire).</li>
+                </ul>
+
+                <h4>La Rédaction</h4>
+                <div class="structure-box">
+                    <strong>INTRO :</strong> Amorce > Présentation corpus > Problématique > Plan.<br>
+                    <strong>DÉV :</strong> Confronter ("X dit ceci, Y s'y oppose"). Rester neutre.<br>
+                    <strong>CONCL :</strong> Bilan objectif. Pas d'ouverture.
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="card-tag">Exercice 2 : Écriture Perso (20 pts)</span>
+                <h3>L'Écriture Personnelle</h3>
+                <p><strong>Principe :</strong> Exercice <u>subjectif</u>. Utilisez votre culture (Films, Livres, Actu)[cite: 5].</p>
+                <div class="tip-box">
+                    <strong>✅ OBLIGATOIRE :</strong> Dites "Je" ou "Nous". Argumentez !
+                </div>
+
+                <h4>Les Plans Types</h4>
+                <ul>
+                    <li><strong>Dialectique :</strong> Oui / Non / Dépassement (pour question fermée).</li>
+                    <li><strong>Thématique :</strong> Arg 1 / Arg 2 / Arg 3 (pour question "Comment ?").</li>
+                </ul>
+
+                <h4>Méthode A.E.I (Par paragraphe)</h4>
+                <div class="structure-box">
+                    <strong>A</strong>rgument (Idée)<br>
+                    <strong>E</strong>xplication (Pourquoi ?)<br>
+                    <strong>I</strong>llustration (Exemple précis : "Dans *Germinal*...")
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="penseurs">
+        <h2>2. Les Grands Penseurs</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>René Descartes</h3>
+                <p class="card-tag">L'Animal-Machine (XVIIe)</p>
+                <p><strong>Thèse :</strong> L'animal est un assemblage de rouages sans âme, ni raison. Il agit par pure mécanique [cite: 159, 214-220].</p>
+            </div>
+            <div class="card">
+                <h3>Charles Darwin</h3>
+                <p class="card-tag">L'Évolution (XIXe)</p>
+                <p><strong>Thèse :</strong> Rupture avec la hiérarchie divine. L'homme est un animal comme les autres, fruit de l'évolution[cite: 16, 171].</p>
+            </div>
+            <div class="card">
+                <h3>Voltaire</h3>
+                <p class="card-tag">La Sensibilité</p>
+                <p><strong>Thèse :</strong> Réfutation de Descartes. L'animal a des organes, donc il sent. Il a une intelligence pratique [cite: 261-269].</p>
+            </div>
+            <div class="card">
+                <h3>Spinoza</h3>
+                <p class="card-tag">Facultés Psychologiques</p>
+                <p><strong>Thèse :</strong> L'animal a des affects et peut, par son instinct, surpasser l'homme dans certaines situations [cite: 233-237].</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="refs">
+        <h2>3. Support de Cours & Connexions</h2>
+        <p style="margin-bottom: 1rem;">Cliquez sur les catégories pour voir les détails.</p>
+
+        <details>
+            <summary>📚 Littérature & Poésie</summary>
+            <div class="details-content">
+                <div class="ref-item">
+                    <strong>Jean de La Fontaine (Fables)</strong>
+                    Utilise l'animal pour instruire les hommes ("Le Loup et le Chien")[cite: 38].
+                    <div class="badge-container">
+                        <span class="ref-link">Idée : Anthropomorphisme</span>
+                        <span class="ref-connect">🔗 Opposé à : Descartes</span>
+                    </div>
+                </div>
+                <div class="ref-item">
+                    <strong>Victor Hugo & Zola</strong>
+                    *Melancholia* et *Germinal*. Le cheval partage la souffrance de l'ouvrier/mineur [cite: 355-364].
+                    <div class="badge-container">
+                        <span class="ref-link">Idée : Souffrance partagée</span>
+                        <span class="ref-connect">🔗 Rejoint : Voltaire</span>
+                    </div>
+                </div>
+                <div class="ref-item">
+                    <strong>Jacques Prévert</strong>
+                    Donne la parole aux animaux qui se rebellent ("Vive la liberté !") [cite: 358-360].
+                    <div class="badge-container">
+                        <span class="ref-link">Idée : Liberté / Révolte</span>
+                        <span class="ref-connect">🔗 Lien avec : Orwell</span>
+                    </div>
+                </div>
+                <div class="ref-item">
+                    <strong>George Orwell (La Ferme des animaux)</strong>
+                    Allégorie politique (Stalinisme) où les cochons prennent le pouvoir [cite: 381-387].
+                    <div class="badge-container">
+                        <span class="ref-link">Idée : Satire politique</span>
+                    </div>
+                </div>
+                <div class="ref-item">
+                    <strong>Colette (Dialogues de bêtes)</strong>
+                    Respect de l'individualité et du silence animal [cite: 668-687].
+                    <div class="badge-container">
+                        <span class="ref-link">Idée : Intelligence animale</span>
+                        <span class="ref-connect">🔗 Précurseur : Éthologie</span>
+                    </div>
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>🏛 Philosophie & Sciences</summary>
+            <div class="details-content">
+                <div class="ref-item">
+                    <strong>René Descartes</strong>
+                    Théorie mécaniste : l'animal n'est qu'une horloge complexe [cite: 208-216].
+                    <div class="badge-container">
+                        <span class="ref-link">Idée : L'Animal-Machine</span>
+                        <span class="ref-connect">🔗 Opposé à : Tout le corpus</span>
+                    </div>
+                </div>
+                <div class="ref-item">
+                    <strong>Spinoza</strong>
+                    Les animaux ont des "facultés psychologiques" supérieures par instinct [cite: 233-237].
+                    <div class="badge-container">
+                        <span class="ref-link">Idée : Intelligence sensorielle</span>
+                        <span class="ref-connect">🔗 Contredit : Descartes</span>
+                    </div>
+                </div>
+                <div class="ref-item">
+                    <strong>Charles Darwin</strong>
+                    Théorie de l'évolution[cite: 16].
+                    <div class="badge-container">
+                        <span class="ref-link">Idée : Continuité biologique</span>
+                        <span class="ref-connect">🔗 Brise : Hiérarchie divine</span>
+                    </div>
+                </div>
+                <div class="ref-item">
+                    <strong>Gassendi</strong>
+                    "La bête est une chose qui sent, donc une chose qui pense"[cite: 230].
+                    <div class="badge-container">
+                        <span class="ref-link">Idée : Pensée animale</span>
+                        <span class="ref-connect">🔗 Opposant : Descartes</span>
+                    </div>
+                </div>
+                <div class="ref-item">
+                    <strong>Voltaire</strong>
+                    Critique la cruauté envers des êtres dotés de sens [cite: 261-269].
+                    <div class="badge-container">
+                        <span class="ref-link">Idée : Sensibilité / Morale</span>
+                    </div>
+                </div>
+                <div class="ref-item">
+                    <strong>Code Civil & Toulon (2019)</strong>
+                    L'animal : "personne physique non humaine" / "être sensible" [cite: 179-181].
+                    <div class="badge-container">
+                        <span class="ref-link">Idée : Statut Juridique</span>
+                    </div>
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>🎨 Arts & Cinéma</summary>
+            <div class="details-content">
+                <div class="ref-item">
+                    <strong>Rosa Bonheur (Peinture)</strong>
+                    *Le Marché aux chevaux*. Donne une âme aux animaux de travail [cite: 630-653].
+                    <div class="badge-container">
+                        <span class="ref-link">Idée : Individualité</span>
+                    </div>
+                </div>
+                <div class="ref-item">
+                    <strong>Le Projet Nim (Docu)</strong>
+                    Expérience sur un chimpanzé élevé comme un humain [cite: 458-461].
+                    <div class="badge-container">
+                        <span class="ref-link">Idée : Éthique scientifique</span>
+                    </div>
+                </div>
+                <div class="ref-item">
+                    <strong>La Planète des Singes</strong>
+                    Renversement : l'homme devient l'animal [cite: 311-313].
+                    <div class="badge-container">
+                        <span class="ref-link">Idée : Relativisme / Antispécisme</span>
+                    </div>
+                </div>
+            </div>
+        </details>
+    </section>
+
+    <section id="bilan">
+        <h2>4. Tableau Bilan</h2>
+        <p style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--text-secondary);">Glissez vers la droite pour voir tout le tableau.</p>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Titre / Auteur</th>
+                        <th>Idée Défendue</th>
+                        <th>Adversaire / Allié</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Descartes</strong></td>
+                        <td><strong>Animal-Machine.</strong> Mécanique sans âme.</td>
+                        <td>Vs Voltaire, Rousseau, Spinoza.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Spinoza</strong></td>
+                        <td><strong>Facultés psycho.</strong> L'animal sent et s'adapte.</td>
+                        <td>Contredit Descartes.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Darwin</strong></td>
+                        <td><strong>Évolution.</strong> Continuité biologique.</td>
+                        <td>Vs La Bible (Genèse).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Voltaire</strong></td>
+                        <td><strong>Sensibilité.</strong> L'animal souffre.</td>
+                        <td>Allié de Rousseau / Vs Descartes.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bekoff (Éthologie)</strong></td>
+                        <td><strong>Continuum.</strong> Intelligence émotionnelle.</td>
+                        <td>Confirme Darwin.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="quiz">
+        <h2>5. Testez vos connaissances</h2>
+        <div class="card">
+            <div id="question-counter">Question 1 / 15</div>
+            <h3 id="question-text">Question...</h3>
+            <div id="options-container"></div>
+            <p id="feedback" style="margin-top: 1rem; font-weight: bold; min-height: 1.5rem;"></p>
+        </div>
+    </section>
+
+    <footer>
+        <p>Créé avec l'assistance de Gemini • Basé sur le corpus "Imaginer, connaître, comprendre l'animal"</p>
+    </footer>
+
+    <script>
+        // LISTE DE 15 QUESTIONS
+        const questions = [
+            {
+                q: "Que signifie étymologiquement le mot 'Animal' (Anima) ?",
+                options: ["Une machine qui bouge", "Le souffle, l'âme", "Une chose sauvage"],
+                answer: 1,
+                cite: "Lien : Étymologie latine [cite: 146-148]"
+            },
+            {
+                q: "Quelle est la théorie principale de Descartes concernant les animaux ?",
+                options: ["L'Animal-Machine", "L'Animal-Dieu", "L'Animal-Citoyen"],
+                answer: 0,
+                cite: "Lien : Discours de la méthode [cite: 217]"
+            },
+            {
+                q: "Quelle différence fondamentale Rousseau fait-il entre l'Homme et l'Animal ?",
+                options: ["La force physique", "La liberté (perfectibilité) vs l'instinct", "La capacité à dormir"],
+                answer: 1,
+                cite: "Lien : Discours sur l'inégalité [cite: 251-259]"
+            },
+            {
+                q: "Quel est l'argument principal de Voltaire contre Descartes ?",
+                options: ["Les animaux ont des organes, donc ils sentent", "Les animaux savent lire", "Dieu l'a dit"],
+                answer: 0,
+                cite: "Lien : Dictionnaire Philosophique [cite: 268-269]"
+            },
+            {
+                q: "Selon Spinoza, l'animal peut-il être supérieur à l'homme ?",
+                options: ["Jamais, il est inférieur", "Oui, par ses facultés psychologiques (instinct)", "Non, c'est une machine"],
+                answer: 1,
+                cite: "Lien : Spinoza vs Descartes [cite: 236]"
+            },
+            {
+                q: "Que stipule la déclaration de Toulon (2019) ?",
+                options: ["L'animal est une chose", "L'animal est une personne physique non-humaine", "L'animal doit être mangé"],
+                answer: 1,
+                cite: "Lien : Évolution juridique [cite: 179-181]"
+            },
+            {
+                q: "Qu'est-ce que l'Antispécisme ?",
+                options: ["Refuser la hiérarchie entre les espèces", "Détester les animaux", "Une technique de chasse"],
+                answer: 0,
+                cite: "Lien : Définition Antispécisme [cite: 290-297]"
+            },
+            {
+                q: "Dans 'Germinal' de Zola, qui est Trompette ?",
+                options: ["Un chien de garde", "Un cheval de mine", "Un canari"],
+                answer: 1,
+                cite: "Lien : Souffrance partagée [cite: 355]"
+            },
+            {
+                q: "Que critique Orwell dans 'La Ferme des animaux' ?",
+                options: ["L'élevage intensif", "Le totalitarisme (Stalinisme)", "La nourriture végétarienne"],
+                answer: 1,
+                cite: "Lien : Satire politique [cite: 386-387]"
+            },
+            {
+                q: "Quelle est la citation de Gassendi opposée à Descartes ?",
+                options: ["La bête est une machine", "La bête est une chose qui pense", "La bête n'a pas d'âme"],
+                answer: 1,
+                cite: "Lien : Gassendi [cite: 230]"
+            },
+            {
+                q: "Quel apport scientifique Darwin a-t-il fait au XIXe siècle ?",
+                options: ["La théorie de l'évolution des espèces", "La découverte de l'ADN", "Le premier zoo"],
+                answer: 0,
+                cite: "Lien : De l'origine des espèces [cite: 171]"
+            },
+            {
+                q: "Quel est le style de Rosa Bonheur ?",
+                options: ["Abstrait", "Réaliste (peindre l'âme de l'animal)", "Cubiste"],
+                answer: 1,
+                cite: "Lien : Peinture animalière [cite: 630-645]"
+            },
+            {
+                q: "Dans l'expérience 'Projet Nim', qu'a-t-on essayé d'enseigner au chimpanzé ?",
+                options: ["Les mathématiques", "La langue des signes", "La cuisine"],
+                answer: 1,
+                cite: "Lien : James Marsh [cite: 459]"
+            },
+            {
+                q: "Quelle auteure dit : 'Je ne serais devenue muette...' ?",
+                options: ["George Sand", "Colette", "Madame de Sévigné"],
+                answer: 1,
+                cite: "Lien : Dialogues de bêtes [cite: 680-681]"
+            },
+            {
+                q: "Chez Jacques Prévert, que font souvent les animaux ?",
+                options: ["Ils dorment", "Ils parlent et revendiquent leur liberté", "Ils servent l'homme"],
+                answer: 1,
+                cite: "Lien : Poésie engagée [cite: 360]"
+            }
+        ];
+
+        let currentQuestion = 0;
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('question-counter').innerText = `Question ${currentQuestion + 1} / ${questions.length}`;
+            document.getElementById('question-text').innerText = q.q;
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            q.options.forEach((opt, index) => {
+                const div = document.createElement('div');
+                div.className = 'quiz-option';
+                div.innerText = opt;
+                div.onclick = () => checkAnswer(div, index === q.answer, q.cite);
+                container.appendChild(div);
+            });
+            document.getElementById('feedback').innerText = '';
+        }
+
+        function checkAnswer(element, isCorrect, citation) {
+            const opts = document.querySelectorAll('.quiz-option');
+            opts.forEach(o => o.onclick = null);
+
+            if(isCorrect) {
+                element.classList.add('correct');
+                document.getElementById('feedback').style.color = 'green';
+                document.getElementById('feedback').innerText = "Correct ! " + citation;
+            } else {
+                element.classList.add('wrong');
+                document.getElementById('feedback').style.color = 'red';
+                document.getElementById('feedback').innerText = "Faux. " + citation;
+                opts[questions[currentQuestion].answer].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                if(currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    showFinalScreen();
+                }
+            }, 2500);
+        }
+
+        function showFinalScreen() {
+            document.getElementById('question-counter').innerText = "TERMINÉ";
+            document.getElementById('question-text').innerText = "Bravo ! Vous avez terminé le quiz.";
+            document.getElementById('options-container').innerHTML = `
+                <div style="padding: 2rem; text-align: center; color: var(--text-secondary);">
+                    Vous avez parcouru toutes les notions clés.<br>
+                    Relisez le bilan pour parfaire votre culture.
+                    <br><br>
+                    <button onclick="location.reload()" style="padding: 12px 24px; background: var(--accent-blue); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 1rem; font-weight: 600;">Recommencer</button>
+                </div>
+            `;
+            document.getElementById('feedback').innerText = "";
+        }
+
+        loadQuestion();
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
